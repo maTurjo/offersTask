@@ -13,10 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('*', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
+// 
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('{reactRoutes}', function () {
+    return view('welcome'); // your start view
+})->where('reactRoutes', '^((?!api).)*$'); // except 'api' word

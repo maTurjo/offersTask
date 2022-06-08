@@ -1,19 +1,35 @@
-import React from 'react'
-import ReactDOM from 'react-dom';
-
-import ShopPage from './ShopPage';
+import React from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Header from "../components/Header";
+import AdminPage from "./AdminPage";
+import ShopPage from "./ShopPage";
+import SingleShopPage from "./SingleShopPage";
 
 const Homepage = () => {
-  return (
-    <div>
-        <ShopPage></ShopPage>
-    </div>
-  )
-}
+    return (
+        <div>
+          <React.StrictMode>
 
-export default Homepage
+              <Header/>
+            <Routes>
+                <Route path="/" element={<ShopPage/>} exact />
+                <Route path="/admin" element={<AdminPage/>} exact />
+                <Route path="/:id" element={<SingleShopPage/>} exact />
+            </Routes>
+            {/* <ShopPage></ShopPage> */}
+          </React.StrictMode>
+        </div>
+    );
+};
 
+export default Homepage;
 
-if (document.getElementById('root')) {
-    ReactDOM.render(<Homepage />, document.getElementById('root'));
+if (document.getElementById("root")) {
+    ReactDOM.render(
+        <BrowserRouter>
+            <Homepage />
+        </BrowserRouter>,
+        document.getElementById("root")
+    );
 }

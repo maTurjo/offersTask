@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Header from "../components/Header";
 import ShopListItem from "../components/ShopListItem";
 const ShopPage = () => {
     const [ShopCollection, setShopCollection] = useState([]);
@@ -8,18 +7,22 @@ const ShopPage = () => {
         setShopCollection(() => {
             return [
                 {
+                    id:1,
                     partnerName: "Sephora",
                     location: { latitude: "", logitude: "" },
                     offerPercentage: 10,
-                    imageUrl: "https://picsum.photos/100/100",
+                    imageUrl: "https://source.unsplash.com/100x100",
                 },
                 {
+                    id:2,
                     partnerName: "M&M",
                     location: { latitude: "", logitude: "" },
                     offerPercentage: 10,
                     imageUrl: "https://picsum.photos/100/100",
                 },
                 {
+
+                    id:3,
                     partnerName: "Bullet",
                     location: { latitude: "", logitude: "" },
                     offerPercentage: 10,
@@ -30,17 +33,16 @@ const ShopPage = () => {
     }, []);
 
     return (
-        <div>
-            <Header></Header>
-            <ul>
+        <div className="container">
+            <ul className="list-group">
                 {ShopCollection.map((item) => {
                     return (
+                            <li className="list-group-item-action">
                         <div>
-                            <li>
                                 {/* <li>{item.partnerName}</li> */}
-                                <ShopListItem shopObject={item} />
-                            </li>
+                                <ShopListItem  shopObject={item} />
                         </div>
+                            </li>
                     );
                 })}
             </ul>
