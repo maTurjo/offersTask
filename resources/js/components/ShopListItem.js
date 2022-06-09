@@ -6,9 +6,9 @@ const ShopListItem = ({shopObject}) => {
 
   let navigate = useNavigate();
   const goToSinglePage=()=>{
-    
+
     console.log(shopObject);
-    let path = `/${shopObject.id}`; 
+    let path = `/${shopObject.id}`;
     navigate(path);
 
   }
@@ -17,13 +17,13 @@ const ShopListItem = ({shopObject}) => {
     return (
     <div onClick={goToSinglePage} >
 
-    <div className='row my-2'>
-        <div className='col-md-3 text-center align-self-center'>{shopObject.partnerName}</div>
-        <div className='col-md-2 text-center align-self-center'>{shopObject.location.latitude}</div>
-        <div className='col-md-2 text-center align-self-center'>{shopObject.location.longitude}</div>
-        <div className='col-md-3 text-center align-self-center'>{shopObject.offerPercentage}</div>
-        {/* <div>{shopObject.imageUrl}</div> */}
-        <img className='img col-md-2' src={shopObject.imageUrl}/>
+    <div className='row my-2 '>
+        <button className='col-md-3 text-center align-self-center btn'>{shopObject.name}</button>
+        <div className='col-md-2 text-center align-self-center'>{shopObject.latitude}</div>
+        <div className='col-md-2 text-center align-self-center'>{shopObject.longitude}</div>
+        <div className='col-md-3 text-center align-self-center'>{shopObject.discount} <span className='text-danger'>% off</span></div>
+        {/* <div>{shopObject.image}</div> */}
+        <img className='img col-md-2' src={shopObject.image}/>
 
     </div>
     </div>

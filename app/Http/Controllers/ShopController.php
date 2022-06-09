@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Shop;
 use Illuminate\Http\Request;
 
+
 class ShopController extends Controller
 {
 
@@ -18,7 +19,7 @@ class ShopController extends Controller
     {
 
         return Shop::all();
-     
+
         //
     }
 
@@ -41,7 +42,7 @@ class ShopController extends Controller
      */
     public function show($id)
     {
-        
+
         return Shop::find($id);
         //
     }
@@ -56,6 +57,13 @@ class ShopController extends Controller
     public function update(Request $request, $id)
     {
 
+
+        if($request->hasFile('imgupload')){
+            return "file is found";
+         }
+         else{
+             return "file not found";
+         }
         $shop=Shop::find($id);
         $shop->update($request->all());
         return $shop;

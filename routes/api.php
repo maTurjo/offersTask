@@ -25,7 +25,7 @@ Route::post('/login',[AuthController::class,'login']);
 
 Route::get('/shops', [ShopController::class, 'index']);
 // Route::get('/shop/{id}',[ShopController::class,'show']);
-Route::put('/shop/{id}', [ShopController::class, 'update']);
+Route::post('/shop/{id}', [ShopController::class, 'update']);
 Route::delete('/shop/{id}', [ShopController::class, 'destroy']);
 
 Route::group(['middleware'=>['auth:sanctum']], function () {

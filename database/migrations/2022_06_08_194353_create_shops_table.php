@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('discount');
             $table->decimal('latitude');
             $table->decimal('longitude');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

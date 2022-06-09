@@ -11,7 +11,7 @@ const Homepage = () => {
         <div>
           <React.StrictMode>
 
-              <Header/>
+
             <Routes>
                 <Route path="/" element={<ShopPage/>} exact />
                 <Route path="/admin" element={<AdminPage/>} exact />
