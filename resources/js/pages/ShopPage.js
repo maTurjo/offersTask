@@ -11,7 +11,7 @@ const ShopPage = () => {
             redirect: "follow",
         };
 
-        fetch("http://localhost:3000/api/shops", requestOptions)
+        fetch(`${window.location.origin}/api/shops`, requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
@@ -29,9 +29,9 @@ const ShopPage = () => {
                 <ul className="list-group">
                     {ShopCollection.map((item) => {
                         return (
-                            <li className="list-group-item-action">
+                            <li key={item.id.toString()} className="list-group-item-action">
                                 <div>
-                                    <ShopListItem shopObject={item} />
+                                    <ShopListItem  shopObject={item} />
                                 </div>
                             </li>
                         );

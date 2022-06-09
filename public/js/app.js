@@ -5472,7 +5472,7 @@ var Header = function Header() {
       headers: myHeaders,
       redirect: "follow"
     };
-    fetch("http://localhost:3000/api/logout", requestOptions).then(function (response) {
+    fetch("".concat(window.location.origin, "/api/logout"), requestOptions).then(function (response) {
       return response.json();
     }).then(function (result) {
       js_cookie__WEBPACK_IMPORTED_MODULE_1__["default"].remove("ot_credentials");
@@ -5599,7 +5599,7 @@ var LoginBox = function LoginBox() {
       body: urlencoded,
       redirect: "follow"
     };
-    fetch("http://localhost:3000/api/login", requestOptions).then(function (response) {
+    fetch("".concat(window.location.origin, "/api/login"), requestOptions).then(function (response) {
       return response.json();
     }).then(function (result) {
       console.log(result);
@@ -5725,12 +5725,12 @@ var ShopListItem = function ShopListItem(_ref) {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
         className: "col-md-3 text-center align-self-center btn",
         children: shopObject.name
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
         className: "col-md-2 text-center align-self-center",
-        children: shopObject.latitude
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+        children: [shopObject.latitude, " lat"]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
         className: "col-md-2 text-center align-self-center",
-        children: shopObject.longitude
+        children: [shopObject.longitude, " long"]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
         className: "col-md-3 text-center align-self-center",
         children: [shopObject.discount, " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
@@ -5739,7 +5739,7 @@ var ShopListItem = function ShopListItem(_ref) {
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("img", {
         className: "img col-md-2",
-        src: shopObject.image
+        src: window.location.origin + '/images/' + shopObject.image
       })]
     })
   });
@@ -5914,7 +5914,7 @@ var ShopPage = function ShopPage() {
       method: "GET",
       redirect: "follow"
     };
-    fetch("http://localhost:3000/api/shops", requestOptions).then(function (response) {
+    fetch("".concat(window.location.origin, "/api/shops"), requestOptions).then(function (response) {
       return response.json();
     }).then(function (result) {
       console.log(result);
@@ -5938,7 +5938,7 @@ var ShopPage = function ShopPage() {
                 shopObject: item
               })
             })
-          });
+          }, item.id.toString());
         })
       })
     })]
@@ -6041,7 +6041,7 @@ var SingleShopPage = function SingleShopPage() {
         headers: myHeaders,
         redirect: "follow"
       };
-      fetch("http://localhost:3000/api/shop/".concat(id), requestOptions).then(function (response) {
+      fetch("".concat(window.location.origin, "/api/shop/").concat(id), requestOptions).then(function (response) {
         return response.json();
       }).then(function (result) {
         setShop(result);
@@ -6075,9 +6075,9 @@ var SingleShopPage = function SingleShopPage() {
   var uploadFile = function uploadFile() {
     if (imageFileSelected) {
       console.log("Sending File");
-      var myHdrrs = new Headers(); // myHdrrs.append("Accept", "application/json");
-
-      myHdrrs.append("Authorization", "Bearer 34|KvIa9gMLb3zl3S3V8sYbuB1fsAYHxmeqHWXfKxmt");
+      var myHdrrs = new Headers();
+      myHdrrs.append("Accept", "application/json");
+      myHdrrs.append("Authorization", "Bearer ".concat(JSON.parse(js_cookie__WEBPACK_IMPORTED_MODULE_1__["default"].get("ot_credentials")).token));
       myHdrrs.append("X-CSRF-TOKEN", csrf_token);
       var formdata = new FormData();
       formdata.append("imgupload", imageFile);
@@ -6087,23 +6087,46 @@ var SingleShopPage = function SingleShopPage() {
         body: formdata,
         redirect: "follow"
       };
-      fetch("http://localhost:3000/api/shop/".concat(id), requestOptions).then(function (response) {
+      fetch("".concat(window.location.origin, "/api/shop/").concat(id), requestOptions).then(function (response) {
         return response.text();
       }).then(function (result) {
-        return console.log(result);
+        console.log(result);
+        navigate("/");
       })["catch"](function (error) {
         return console.log("error", error);
       });
+    } else {
+      navigate("/");
     }
   };
 
+  var handleDelete = function handleDelete() {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer ".concat(JSON.parse(js_cookie__WEBPACK_IMPORTED_MODULE_1__["default"].get("ot_credentials")).token));
+    myHeaders.append("X-CSRF-TOKEN", csrf_token);
+    var urlencoded = new URLSearchParams();
+    var requestOptions = {
+      method: "DELETE",
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: "follow"
+    };
+    fetch("".concat(window.location.origin, "/api/shop/").concat(id), requestOptions).then(function (response) {
+      return response.text();
+    }).then(function (result) {
+      console.log(result);
+      navigate("/");
+    })["catch"](function (error) {
+      return console.log("error", error);
+    });
+  };
+
   var handleSaveSubmission = function handleSaveSubmission() {
-    uploadFile();
     var myHeaders = new Headers();
     myHeaders.append("Accept", "application/json");
     myHeaders.append("Authorization", "Bearer ".concat(JSON.parse(js_cookie__WEBPACK_IMPORTED_MODULE_1__["default"].get("ot_credentials")).token));
-    myHeaders.append("X-CSRF-TOKEN", csrf_token); // myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
+    myHeaders.append("X-CSRF-TOKEN", csrf_token);
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
     var urlencoded = new URLSearchParams();
     urlencoded.append("name", name);
     urlencoded.append("discount", discount);
@@ -6116,10 +6139,10 @@ var SingleShopPage = function SingleShopPage() {
       body: urlencoded,
       redirect: "follow"
     };
-    fetch("http://localhost:3000/api/shop/".concat(id), requestOptions).then(function (response) {
+    fetch("".concat(window.location.origin, "/api/shop/").concat(id), requestOptions).then(function (response) {
       return response.text();
     }).then(function (result) {
-      // navigate("/");
+      uploadFile();
       console.log(result);
     })["catch"](function (error) {
       return console.log("error", error);
@@ -6172,17 +6195,11 @@ var SingleShopPage = function SingleShopPage() {
         },
         value: longitude
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
-        htmlFor: "name",
-        children: "image"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
-        type: "url",
-        onChange: function onChange(e) {
-          setimage(e.target.value);
-        },
-        value: image
-      })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+        src: window.location.origin + '/images/' + image,
+        alt: ""
+      })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
         htmlFor: "file",
@@ -6195,6 +6212,10 @@ var SingleShopPage = function SingleShopPage() {
       onClick: handleSaveSubmission,
       className: "btn btn-success",
       children: "Save"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+      onClick: handleDelete,
+      className: "btn btn-danger",
+      children: "Delete"
     })]
   });
 };

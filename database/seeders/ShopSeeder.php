@@ -23,7 +23,7 @@ class ShopSeeder extends Seeder
                 'discount' => 10,
                 'latitude' => 123654,
                 'longitude'=>11111,
-                'image'=>null
+                'image'=>"1654793068.jpg"
             ]);
           }
     }

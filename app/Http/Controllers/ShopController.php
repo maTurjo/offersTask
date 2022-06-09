@@ -56,17 +56,26 @@ class ShopController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        
+        $shop=Shop::find($id);
 
         if($request->hasFile('imgupload')){
-            return "file is found";
-         }
+            // $request->validate([
+            //     'imgupload' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            // ]);
+            $imageName = time().'.'.$request->imgupload->extension();  
+            $request->imgupload->move(public_path('images'), $imageName);
+            // $shop->update(['image'=>$imageName]);
+            $shop->image=$imageName;
+            $shop->latitude=55555;
+            $shop->save();
+            return $shop->image;
+            // return "Image Saved Successfully";
+        }
          else{
-             return "file not found";
+             $shop->update($request->all());
+             return $shop;
          }
-        $shop=Shop::find($id);
-        $shop->update($request->all());
-        return $shop;
         //
     }
 
@@ -81,4 +90,5 @@ class ShopController extends Controller
         Shop::destroy($id);
         //
     }
+    
 }

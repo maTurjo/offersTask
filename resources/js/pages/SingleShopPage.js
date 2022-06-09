@@ -30,8 +30,8 @@ const SingleShopPage = () => {
                 headers: myHeaders,
                 redirect: "follow",
             };
-
-            fetch(`http://localhost:3000/api/shop/${id}`, requestOptions)
+           
+            fetch(`${window.location.origin}/api/shop/${id}`, requestOptions)
                 .then((response) => response.json())
                 .then((result) => {
                     setShop(result);
@@ -63,21 +63,19 @@ const SingleShopPage = () => {
     };
 
     const uploadFile = () => {
-        if(imageFileSelected){
+        if (imageFileSelected) {
             console.log("Sending File");
             var myHdrrs = new Headers();
-            // myHdrrs.append("Accept", "application/json");
+            myHdrrs.append("Accept", "application/json");
             myHdrrs.append(
                 "Authorization",
-            "Bearer 34|KvIa9gMLb3zl3S3V8sYbuB1fsAYHxmeqHWXfKxmt"
+                `Bearer ${JSON.parse(Cookies.get("ot_credentials")).token}`
+
             );
             myHdrrs.append("X-CSRF-TOKEN", csrf_token);
 
-        var formdata = new FormData();
-        formdata.append(
-            "imgupload",
-            imageFile
-            );
+            var formdata = new FormData();
+            formdata.append("imgupload", imageFile);
 
             var requestOptions = {
                 method: "POST",
@@ -85,16 +83,47 @@ const SingleShopPage = () => {
                 body: formdata,
                 redirect: "follow",
             };
-
-            fetch(`http://localhost:3000/api/shop/${id}`, requestOptions)
-            .then((response) => response.text())
-            .then((result) => console.log(result))
-            .catch((error) => console.log("error", error));
+           
+            fetch(`${window.location.origin}/api/shop/${id}`, requestOptions)
+                .then((response) => response.text())
+                .then((result) => {
+                    console.log(result);
+                    navigate("/");
+                })
+                .catch((error) => console.log("error", error));
+        } else {
+            navigate("/");
         }
     };
 
+    const handleDelete = () => {
+        var myHeaders = new Headers();
+        myHeaders.append(
+            "Authorization",
+            `Bearer ${JSON.parse(Cookies.get("ot_credentials")).token}`
+        );
+        myHeaders.append("X-CSRF-TOKEN", csrf_token);
+
+
+        var urlencoded = new URLSearchParams();
+
+        var requestOptions = {
+            method: "DELETE",
+            headers: myHeaders,
+            body: urlencoded,
+            redirect: "follow",
+        };
+        
+        fetch(`${window.location.origin}/api/shop/${id}`, requestOptions)
+            .then((response) => response.text())
+            .then((result) => {
+                console.log(result)
+                navigate("/");
+            })
+            .catch((error) => console.log("error", error));
+    };
+
     const handleSaveSubmission = () => {
-        uploadFile();
         var myHeaders = new Headers();
         myHeaders.append("Accept", "application/json");
         myHeaders.append(
@@ -103,7 +132,7 @@ const SingleShopPage = () => {
         );
         myHeaders.append("X-CSRF-TOKEN", csrf_token);
 
-        // myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+        myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
         var urlencoded = new URLSearchParams();
         urlencoded.append("name", name);
@@ -118,11 +147,11 @@ const SingleShopPage = () => {
             body: urlencoded,
             redirect: "follow",
         };
-
-        fetch(`http://localhost:3000/api/shop/${id}`, requestOptions)
+    
+        fetch(`${window.location.origin}/api/shop/${id}`, requestOptions)
             .then((response) => response.text())
             .then((result) => {
-                // navigate("/");
+                uploadFile();
                 console.log(result);
             })
             .catch((error) => console.log("error", error));
@@ -172,23 +201,17 @@ const SingleShopPage = () => {
                 />
             </div>
             <div>
-                <label htmlFor="name">image</label>
-                <input
-                    type="url"
-                    onChange={(e) => {
-                        setimage(e.target.value);
-                    }}
-                    value={image}
-                />
+                <img src={window.location.origin+'/images/'+image} alt="" />
             </div>
             <div>
-                <label htmlFor="file" >
-                    Change Image
-                </label>
+                <label htmlFor="file">Change Image</label>
                 <input type="file" onChange={selectImageFile} />
             </div>
             <button onClick={handleSaveSubmission} className="btn btn-success">
                 Save
+            </button>
+            <button onClick={handleDelete} className="btn btn-danger">
+                Delete
             </button>
         </div>
     );

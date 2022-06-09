@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 
 const Header = () => {
+
     const [isLoggedIn, setisLoggedIn] = useState(false);
 
     useEffect(() => {
@@ -27,8 +28,8 @@ const Header = () => {
             headers: myHeaders,
             redirect: "follow",
         };
-
-        fetch("http://localhost:3000/api/logout", requestOptions)
+        
+        fetch(`${window.location.origin}/api/logout`, requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 Cookies.remove("ot_credentials");

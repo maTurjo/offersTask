@@ -40,8 +40,8 @@ const LoginBox = () => {
             body: urlencoded,
             redirect: "follow",
         };
-
-        fetch("http://localhost:3000/api/login", requestOptions)
+        
+        fetch(`${window.location.origin}/api/login`, requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
