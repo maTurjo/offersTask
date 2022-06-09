@@ -22,7 +22,6 @@ const ShopListItem = ({shopObject}) => {
         <div className='col-md-2 text-center align-self-center'>{shopObject.latitude} lat</div>
         <div className='col-md-2 text-center align-self-center'>{shopObject.longitude} long</div>
         <div className='col-md-3 text-center align-self-center'>{shopObject.discount} <span className='text-danger'>% off</span></div>
-        {/* <div>{shopObject.image}</div> */}
         <img className='img col-md-2' src={window.location.origin+'/images/'+shopObject.image}/>
 
     </div>

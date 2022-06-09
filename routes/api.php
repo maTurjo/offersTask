@@ -16,15 +16,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+
 
 Route::post('/register',[AuthController::class,'register']);
 Route::post('/login',[AuthController::class,'login']);
 
 Route::get('/shops', [ShopController::class, 'index']);
-// Route::get('/shop/{id}',[ShopController::class,'show']);
+
 
 Route::group(['middleware'=>['auth:sanctum']], function () {
     Route::get('/shop/{id}', [ShopController::class, 'show']);
@@ -36,4 +34,4 @@ Route::group(['middleware'=>['auth:sanctum']], function () {
 
 
 
-// Route::post('/')
+

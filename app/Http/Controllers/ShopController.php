@@ -60,17 +60,12 @@ class ShopController extends Controller
         $shop=Shop::find($id);
 
         if($request->hasFile('imgupload')){
-            // $request->validate([
-            //     'imgupload' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // ]);
+           
             $imageName = time().'.'.$request->imgupload->extension();  
             $request->imgupload->move(public_path('images'), $imageName);
-            // $shop->update(['image'=>$imageName]);
             $shop->image=$imageName;
-            $shop->latitude=55555;
             $shop->save();
-            return $shop->image;
-            // return "Image Saved Successfully";
+            return "Image Saved Successfully";
         }
          else{
              $shop->update($request->all());
