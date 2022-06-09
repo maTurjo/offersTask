@@ -6098,33 +6098,32 @@ var SingleShopPage = function SingleShopPage() {
   };
 
   var handleSaveSubmission = function handleSaveSubmission() {
-    uploadFile(); // var myHeaders = new Headers();
-    // myHeaders.append("Accept", "application/json");
-    // myHeaders.append(
-    //     "Authorization",
-    //     `Bearer ${JSON.parse(Cookies.get("ot_credentials")).token}`
-    // );
-    // myHeaders.append("X-CSRF-TOKEN", csrf_token);
-    // // myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-    // var urlencoded = new URLSearchParams();
-    // urlencoded.append("name", name);
-    // urlencoded.append("discount", discount);
-    // urlencoded.append("latitude", latitude);
-    // urlencoded.append("longitude", longitude);
-    // urlencoded.append("image", image);
-    // var requestOptions = {
-    //     method: "PUT",
-    //     headers: myHeaders,
-    //     body: urlencoded,
-    //     redirect: "follow",
-    // };
-    // fetch(`http://localhost:3000/api/shop/${id}`, requestOptions)
-    //     .then((response) => response.text())
-    //     .then((result) => {
-    //         // navigate("/");
-    //         console.log(result);
-    //     })
-    //     .catch((error) => console.log("error", error));
+    uploadFile();
+    var myHeaders = new Headers();
+    myHeaders.append("Accept", "application/json");
+    myHeaders.append("Authorization", "Bearer ".concat(JSON.parse(js_cookie__WEBPACK_IMPORTED_MODULE_1__["default"].get("ot_credentials")).token));
+    myHeaders.append("X-CSRF-TOKEN", csrf_token); // myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+    var urlencoded = new URLSearchParams();
+    urlencoded.append("name", name);
+    urlencoded.append("discount", discount);
+    urlencoded.append("latitude", latitude);
+    urlencoded.append("longitude", longitude);
+    urlencoded.append("image", image);
+    var requestOptions = {
+      method: "PUT",
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: "follow"
+    };
+    fetch("http://localhost:3000/api/shop/".concat(id), requestOptions).then(function (response) {
+      return response.text();
+    }).then(function (result) {
+      // navigate("/");
+      console.log(result);
+    })["catch"](function (error) {
+      return console.log("error", error);
+    });
   };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {

@@ -95,37 +95,37 @@ const SingleShopPage = () => {
 
     const handleSaveSubmission = () => {
         uploadFile();
-        // var myHeaders = new Headers();
-        // myHeaders.append("Accept", "application/json");
-        // myHeaders.append(
-        //     "Authorization",
-        //     `Bearer ${JSON.parse(Cookies.get("ot_credentials")).token}`
-        // );
-        // myHeaders.append("X-CSRF-TOKEN", csrf_token);
+        var myHeaders = new Headers();
+        myHeaders.append("Accept", "application/json");
+        myHeaders.append(
+            "Authorization",
+            `Bearer ${JSON.parse(Cookies.get("ot_credentials")).token}`
+        );
+        myHeaders.append("X-CSRF-TOKEN", csrf_token);
 
-        // // myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+        // myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
-        // var urlencoded = new URLSearchParams();
-        // urlencoded.append("name", name);
-        // urlencoded.append("discount", discount);
-        // urlencoded.append("latitude", latitude);
-        // urlencoded.append("longitude", longitude);
-        // urlencoded.append("image", image);
+        var urlencoded = new URLSearchParams();
+        urlencoded.append("name", name);
+        urlencoded.append("discount", discount);
+        urlencoded.append("latitude", latitude);
+        urlencoded.append("longitude", longitude);
+        urlencoded.append("image", image);
 
-        // var requestOptions = {
-        //     method: "PUT",
-        //     headers: myHeaders,
-        //     body: urlencoded,
-        //     redirect: "follow",
-        // };
+        var requestOptions = {
+            method: "PUT",
+            headers: myHeaders,
+            body: urlencoded,
+            redirect: "follow",
+        };
 
-        // fetch(`http://localhost:3000/api/shop/${id}`, requestOptions)
-        //     .then((response) => response.text())
-        //     .then((result) => {
-        //         // navigate("/");
-        //         console.log(result);
-        //     })
-        //     .catch((error) => console.log("error", error));
+        fetch(`http://localhost:3000/api/shop/${id}`, requestOptions)
+            .then((response) => response.text())
+            .then((result) => {
+                // navigate("/");
+                console.log(result);
+            })
+            .catch((error) => console.log("error", error));
     };
 
     return (
